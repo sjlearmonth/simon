@@ -8,8 +8,8 @@ $(document).on("keypress", startGame);
 var gameSequence = [];
 var clickCount = 0;
 var gameButtons = ["green", "red", "yellow", "blue"];
-var randomNumber = Math.floor(Math.random() * 4);
-var randomButton = gameButtons[randomNumber];
+var randomNumber;
+var randomButton;
 var levelCount = 1;
 
 function startGame() {
@@ -18,9 +18,10 @@ function startGame() {
 
   randomNumber = Math.floor(Math.random() * 4);
   randomButton = gameButtons[randomNumber];
-
-  animateButton(randomButton);
   gameSequence.push(randomButton);
+  setTimeout(function () {
+    animateButton(randomButton);
+  }, 700);
 }
 
 function flashButton(buttonColor) {
@@ -45,23 +46,24 @@ function handleGreenButton() {
   animateButton("green");
   clickCount++;
 
-  if (gameSequence[clickCount-1] === "green") {
+  if (gameSequence[clickCount - 1] === "green") {
 
     if (clickCount === gameSequence.length) {
+      randomNumber = Math.floor(Math.random() * 4);
+      randomButton = gameButtons[randomNumber];
+      gameSequence.push(randomButton);
+      clickCount = 0;
 
-      setTimeout(function () {
-          randomNumber = Math.floor(Math.random() * 4);
-          randomButton = gameButtons[randomNumber];
-          gameSequence.push(randomButton);
-          animateButton(randomButton);}, 700);
-          clickCount = 0;
-          $("h1").text("Level " + levelCount++)
+      setTimeout(function() {
+        animateButton(randomButton);
+        $("h1").text("Level " + levelCount++);
+      }, 700);
     }
   } else {
     const sound = new Audio("sounds/wrong.mp3");
     sound.play();
     $("body").addClass("game-over");
-    setTimeout(function () {
+    setTimeout(function() {
       $("body").removeClass("game-over");
     }, 700);
     gameSequence = [];
@@ -75,23 +77,24 @@ function handleRedButton() {
   animateButton("red");
   clickCount++;
 
-  if (gameSequence[clickCount-1] === "red") {
+  if (gameSequence[clickCount - 1] === "red") {
 
     if (clickCount === gameSequence.length) {
+      randomNumber = Math.floor(Math.random() * 4);
+      randomButton = gameButtons[randomNumber];
+      gameSequence.push(randomButton);
+      clickCount = 0;
 
-      setTimeout(function () {
-          randomNumber = Math.floor(Math.random() * 4);
-          randomButton = gameButtons[randomNumber];
-          gameSequence.push(randomButton);
-          animateButton(randomButton);}, 700);
-          clickCount = 0;
-          $("h1").text("Level " + levelCount++)
+      setTimeout(function() {
+        animateButton(randomButton);
+        $("h1").text("Level " + levelCount++);
+      }, 700);
     }
   } else {
     const sound = new Audio("sounds/wrong.mp3");
     sound.play();
     $("body").addClass("game-over");
-    setTimeout(function () {
+    setTimeout(function() {
       $("body").removeClass("game-over");
     }, 700);
     gameSequence = [];
@@ -105,23 +108,24 @@ function handleYellowButton() {
   animateButton("yellow");
   clickCount++;
 
-  if (gameSequence[clickCount-1] === "yellow") {
+  if (gameSequence[clickCount - 1] === "yellow") {
 
     if (clickCount === gameSequence.length) {
+      randomNumber = Math.floor(Math.random() * 4);
+      randomButton = gameButtons[randomNumber];
+      gameSequence.push(randomButton);
+      clickCount = 0;
 
-      setTimeout(function () {
-          randomNumber = Math.floor(Math.random() * 4);
-          randomButton = gameButtons[randomNumber];
-          gameSequence.push(randomButton);
-          animateButton(randomButton);}, 700);
-          clickCount = 0;
-          $("h1").text("Level " + levelCount++)
+      setTimeout(function() {
+        animateButton(randomButton);
+        $("h1").text("Level " + levelCount++);
+      }, 700);
     }
   } else {
     const sound = new Audio("sounds/wrong.mp3");
     sound.play();
     $("body").addClass("game-over");
-    setTimeout(function () {
+    setTimeout(function() {
       $("body").removeClass("game-over");
     }, 700);
     gameSequence = [];
@@ -129,30 +133,30 @@ function handleYellowButton() {
     levelCount = 1;
     $("h1").text("Game over, press any key to restart");
   }
-
 }
 
 function handleBlueButton() {
   animateButton("blue");
   clickCount++;
 
-  if (gameSequence[clickCount-1] === "blue") {
+  if (gameSequence[clickCount - 1] === "blue") {
 
     if (gameSequence.length === clickCount) {
+      randomNumber = Math.floor(Math.random() * 4);
+      randomButton = gameButtons[randomNumber];
+      gameSequence.push(randomButton);
+      clickCount = 0;
 
-      setTimeout(function () {
-          randomNumber = Math.floor(Math.random() * 4);
-          randomButton = gameButtons[randomNumber];
-          gameSequence.push(randomButton);
-          animateButton(randomButton);}, 700);
-          clickCount = 0;
-          $("h1").text("Level " + levelCount++)
+      setTimeout(function() {
+        animateButton(randomButton);
+        $("h1").text("Level " + levelCount++);
+      }, 700);
     }
   } else {
     const sound = new Audio("sounds/wrong.mp3");
     sound.play();
     $("body").addClass("game-over");
-    setTimeout(function () {
+    setTimeout(function() {
       $("body").removeClass("game-over");
     }, 700);
     gameSequence = [];
