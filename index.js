@@ -1,31 +1,47 @@
-// Configure event listeners
-$("#green").on("click", handleGreenButton);
-$("#red").on("click", handleRedButton);
-$("#yellow").on("click", handleYellowButton);
-$("#blue").on("click", handleBlueButton);
+$(".btn").click(function() {
+  const buttonColor = $(this).attr("id");
+  animateButton(buttonColor);
+  clickCount++;
+  if (gameSequence[clickCount - 1] === buttonColor) {
+    if (clickCount === gameSequence.length) {
+      const randomButton = startNextSequence()
+      setTimeout(function() {
+        animateButton(randomButton);
+        $("h1").text("Level " + levelCount++);
+      }, 700);
+    }
+  } else {
+    animateWrongAnswer();
+  }
+})
+
 $(document).on("keypress", startGame);
 
 var gameSequence = [];
-var clickCount = 0;
+var clickCount;
 var gameButtons = ["green", "red", "yellow", "blue"];
 var randomNumber;
 var randomButton;
 var levelCount = 1;
 
-function startGame() {
-
-  $("h1").text("Level " + levelCount++);
-
+function startNextSequence() {
   randomNumber = Math.floor(Math.random() * 4);
   randomButton = gameButtons[randomNumber];
   gameSequence.push(randomButton);
-  setTimeout(function () {
+  clickCount = 0;
+  return randomButton;
+}
+
+function startGame() {
+
+  $("h1").text("Level " + levelCount++);
+  startNextSequence();
+  setTimeout(function() {
     animateButton(randomButton);
   }, 700);
 }
 
 function flashButton(buttonColor) {
-
   const buttonId = "#" + buttonColor;
   $(buttonId).css("backgroundColor", "#D3DEDC");
   $(buttonId).addClass("pressed");
@@ -42,126 +58,15 @@ function animateButton(button) {
   flashButton(button);
 }
 
-function handleGreenButton() {
-  animateButton("green");
-  clickCount++;
-
-  if (gameSequence[clickCount - 1] === "green") {
-
-    if (clickCount === gameSequence.length) {
-      randomNumber = Math.floor(Math.random() * 4);
-      randomButton = gameButtons[randomNumber];
-      gameSequence.push(randomButton);
-      clickCount = 0;
-
-      setTimeout(function() {
-        animateButton(randomButton);
-        $("h1").text("Level " + levelCount++);
-      }, 700);
-    }
-  } else {
-    const sound = new Audio("sounds/wrong.mp3");
-    sound.play();
-    $("body").addClass("game-over");
-    setTimeout(function() {
-      $("body").removeClass("game-over");
-    }, 700);
-    gameSequence = [];
-    clickCount = 0;
-    levelCount = 1;
-    $("h1").text("Game over, press any key to restart");
-  }
-}
-
-function handleRedButton() {
-  animateButton("red");
-  clickCount++;
-
-  if (gameSequence[clickCount - 1] === "red") {
-
-    if (clickCount === gameSequence.length) {
-      randomNumber = Math.floor(Math.random() * 4);
-      randomButton = gameButtons[randomNumber];
-      gameSequence.push(randomButton);
-      clickCount = 0;
-
-      setTimeout(function() {
-        animateButton(randomButton);
-        $("h1").text("Level " + levelCount++);
-      }, 700);
-    }
-  } else {
-    const sound = new Audio("sounds/wrong.mp3");
-    sound.play();
-    $("body").addClass("game-over");
-    setTimeout(function() {
-      $("body").removeClass("game-over");
-    }, 700);
-    gameSequence = [];
-    clickCount = 0;
-    levelCount = 1;
-    $("h1").text("Game over, press any key to restart");
-  }
-}
-
-function handleYellowButton() {
-  animateButton("yellow");
-  clickCount++;
-
-  if (gameSequence[clickCount - 1] === "yellow") {
-
-    if (clickCount === gameSequence.length) {
-      randomNumber = Math.floor(Math.random() * 4);
-      randomButton = gameButtons[randomNumber];
-      gameSequence.push(randomButton);
-      clickCount = 0;
-
-      setTimeout(function() {
-        animateButton(randomButton);
-        $("h1").text("Level " + levelCount++);
-      }, 700);
-    }
-  } else {
-    const sound = new Audio("sounds/wrong.mp3");
-    sound.play();
-    $("body").addClass("game-over");
-    setTimeout(function() {
-      $("body").removeClass("game-over");
-    }, 700);
-    gameSequence = [];
-    clickCount = 0;
-    levelCount = 1;
-    $("h1").text("Game over, press any key to restart");
-  }
-}
-
-function handleBlueButton() {
-  animateButton("blue");
-  clickCount++;
-
-  if (gameSequence[clickCount - 1] === "blue") {
-
-    if (gameSequence.length === clickCount) {
-      randomNumber = Math.floor(Math.random() * 4);
-      randomButton = gameButtons[randomNumber];
-      gameSequence.push(randomButton);
-      clickCount = 0;
-
-      setTimeout(function() {
-        animateButton(randomButton);
-        $("h1").text("Level " + levelCount++);
-      }, 700);
-    }
-  } else {
-    const sound = new Audio("sounds/wrong.mp3");
-    sound.play();
-    $("body").addClass("game-over");
-    setTimeout(function() {
-      $("body").removeClass("game-over");
-    }, 700);
-    gameSequence = [];
-    clickCount = 0;
-    levelCount = 1;
-    $("h1").text("Game over, press any key to restart");
-  }
+function animateWrongAnswer() {
+  const sound = new Audio("sounds/wrong.mp3");
+  sound.play();
+  $("body").addClass("game-over");
+  setTimeout(function() {
+    $("body").removeClass("game-over");
+  }, 700);
+  gameSequence = [];
+  clickCount = 0;
+  levelCount = 1;
+  $("h1").text("Game over, press any key to restart");
 }
