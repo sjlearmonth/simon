@@ -1,45 +1,9 @@
-$(".btn").click(function() {
-  const buttonColor = $(this).attr("id");
-  animateButton(buttonColor);
-  clickCount++;
-  if (gameSequence[clickCount - 1] === buttonColor) {
-    if (clickCount === gameSequence.length) {
-      const randomButton = startNextSequence()
-      setTimeout(function() {
-        animateButton(randomButton);
-        $("h1").text("Level " + levelCount++);
-      }, 700);
-    }
-  } else {
-    animateWrongAnswer();
-  }
-})
-
-$(document).on("keypress", startGame);
-
-var gameSequence = [];
+var gameSequence;
 var clickCount;
-var gameButtons = ["green", "red", "yellow", "blue"];
+const gameButtons = ["green", "red", "yellow", "blue"];
 var randomNumber;
 var randomButton;
-var levelCount = 1;
-
-function startNextSequence() {
-  randomNumber = Math.floor(Math.random() * 4);
-  randomButton = gameButtons[randomNumber];
-  gameSequence.push(randomButton);
-  clickCount = 0;
-  return randomButton;
-}
-
-function startGame() {
-
-  $("h1").text("Level " + levelCount++);
-  startNextSequence();
-  setTimeout(function() {
-    animateButton(randomButton);
-  }, 700);
-}
+var levelCount;
 
 function flashButton(buttonColor) {
   const buttonId = "#" + buttonColor;
@@ -65,8 +29,42 @@ function animateWrongAnswer() {
   setTimeout(function() {
     $("body").removeClass("game-over");
   }, 700);
-  gameSequence = [];
-  clickCount = 0;
-  levelCount = 1;
   $("h1").text("Game over, press any key to restart");
+}
+
+$(".btn").click(function() {
+  const buttonColor = $(this).attr("id");
+  animateButton(buttonColor);
+  clickCount++;
+  if (gameSequence[clickCount - 1] === buttonColor) {
+    if (clickCount === gameSequence.length) {
+      const randomButton = fetchRandomButton();
+      setTimeout(function() {
+        animateButton(randomButton);
+        $("h1").text("Level " + levelCount++);
+      }, 700);
+    }
+  } else {
+    animateWrongAnswer();
+  }
+})
+
+function startGame() {
+  gameSequence = [];
+  levelCount = 1;
+  $("h1").text("Level " + levelCount++);
+  randomButton = fetchRandomButton();
+  setTimeout(function() {
+    animateButton(randomButton);
+  }, 700);
+}
+
+$(document).on("keypress", startGame);
+
+function fetchRandomButton() {
+  clickCount = 0;
+  randomNumber = Math.floor(Math.random() * 4);
+  randomButton = gameButtons[randomNumber];
+  gameSequence.push(randomButton);
+  return randomButton;
 }
