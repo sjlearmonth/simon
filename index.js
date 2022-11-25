@@ -5,30 +5,18 @@ var randomNumber;
 var randomButton;
 var levelCount;
 
-function flashButton(buttonColor) {
-  const buttonId = "#" + buttonColor;
-  $(buttonId).css("backgroundColor", "#D3DEDC");
-  $(buttonId).addClass("pressed");
-  setTimeout(function() {
-    $(buttonId).css("backgroundColor", buttonColor);
-    $(buttonId).removeClass("pressed");
-  }, 50);
-}
-
 function animateButton(button) {
   const soundPath = "sounds/" + button + ".mp3";
   const sound = new Audio(soundPath);
   sound.play();
-  flashButton(button);
+  $("#" + button).fadeIn(100).fadeOut(100).fadeIn(100);
 }
 
 function animateWrongAnswer() {
   const sound = new Audio("sounds/wrong.mp3");
   sound.play();
   $("body").addClass("game-over");
-  setTimeout(function() {
-    $("body").removeClass("game-over");
-  }, 700);
+  setTimeout(function() {$("body").removeClass("game-over");}, 700);
   $("h1").text("Game over, press any key to restart");
 }
 
@@ -41,8 +29,7 @@ $(".btn").click(function() {
       const randomButton = fetchRandomButton();
       setTimeout(function() {
         animateButton(randomButton);
-        $("h1").text("Level " + levelCount++);
-      }, 700);
+        $("h1").text("Level " + levelCount++);}, 700);
     }
   } else {
     animateWrongAnswer();
@@ -54,9 +41,7 @@ function startGame() {
   levelCount = 1;
   $("h1").text("Level " + levelCount++);
   randomButton = fetchRandomButton();
-  setTimeout(function() {
-    animateButton(randomButton);
-  }, 700);
+  setTimeout(function() { animateButton(randomButton);}, 700);
 }
 
 $(document).on("keypress", startGame);
