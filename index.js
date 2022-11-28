@@ -1,8 +1,6 @@
 var gameSequence;
 var clickCount;
 const gameButtons = ["green", "red", "yellow", "blue"];
-var randomNumber;
-var randomButton;
 var levelCount;
 
 function animateButton(button) {
@@ -48,8 +46,8 @@ $(document).on("keypress", startGame);
 
 function fetchRandomButton() {
   clickCount = 0;
-  randomNumber = Math.floor(Math.random() * 4);
-  randomButton = gameButtons[randomNumber];
+  const randomNumber = Math.floor(Math.random() * 4);
+  const randomButton = gameButtons[randomNumber];
   gameSequence.push(randomButton);
   return randomButton;
 }
